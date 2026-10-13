@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Listing Preflight: catch Etsy CSV errors before you upload</title>
+  <meta name="description" content="Check your Etsy listings CSV for title, tag, price and quantity errors before bulk upload. Your file stays in your browser." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top">Listing Preflight</a>
+      <nav>
+        <a href="#check">Check a file</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#concierge">Fix it for me</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">For Etsy sellers who bulk-upload listings by CSV</p>
+        <h1>Catch listing errors before the upload fails.</h1>
+        <p class="lead">
+          Drop in your listings CSV. We check every row against Etsy's listing limits
+          (titles up to 140 characters, 13 tags of 20 characters each), flag each problem,
+          and hand you a cleaned file. Your file is checked in your browser and never uploaded.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#check">Check my CSV</a>
+          <a class="btn btn-ghost" href="/sample-listings.csv" download>Download the sample file</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="check" class="section">
+      <div class="wrap">
+        <h2>1. Check your file</h2>
+        <p class="muted">Use the first 25 rows free. The sample file has a few deliberate errors so you can see what a report looks like.</p>
+
+        <div class="card">
+          <label id="dropzone" class="dropzone" for="file-input">
+            <input id="file-input" type="file" accept=".csv,text/csv" />
+            <span class="dz-title">Choose a CSV file</span>
+            <span class="dz-sub" id="file-name">or drop it here. The file stays in your browser.</span>
+          </label>
+          <div id="file-notice" class="notice" hidden></div>
+        </div>
+
+        <div id="mapping-card" class="card" hidden>
+          <h3>Columns</h3>
+          <p class="muted small">We guessed which column is which. Change any that look wrong.</p>
+          <div id="mapping" class="mapping-grid"></div>
+        </div>
+
+        <div id="results" hidden>
+          <div class="summary" id="summary"></div>
+
+          <div id="upgrade" class="card upgrade" hidden>
+            <p><strong>Free checks the first <span id="free-limit">25</span> rows.</strong>
+              This file has <span id="total-rows">0</span> rows. Pro (not live yet) checks all of them.</p>
+            <a class="btn btn-primary" href="#pricing">See Pro</a>
+          </div>
+
+          <div class="toolbar">
+            <button id="download" class="btn btn-primary" type="button">Download cleaned CSV</button>
+            <p class="muted small">Cleaned file contains the checked rows. Fixes are applied. Errors stay for you to correct.</p>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Row</th><th>Status</th><th>Title</th><th>Issues</th></tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+          <p id="row-cap" class="muted small" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section alt">
+      <div class="wrap">
+        <h2>2. Pricing</h2>
+        <p class="muted">We're testing demand before building billing. Nothing is charged today.</p>
+        <div class="plans">
+          <div class="card plan">
+            <h3>Free</h3>
+            <p class="price">$0</p>
+            <ul>
+              <li>Check up to 25 rows per file</li>
+              <li>Full error and fix report</li>
+              <li>Cleaned CSV download</li>
+            </ul>
+          </div>
+          <div class="card plan featured">
+            <h3>Pro <span class="tag">Not live yet</span></h3>
+            <p class="price">$9<span>/month</span> <span class="muted small">(planned)</span></p>
+            <ul>
+              <li>Unlimited rows per file</li>
+              <li>Saved column mappings</li>
+              <li>Priority support</li>
+            </ul>
+            <form id="pro-form" class="inline-form" novalidate>
+              <input type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+              <button class="btn btn-primary" type="submit">Join the Pro waitlist</button>
+            </form>
+            <p id="pro-msg" class="small" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="concierge" class="section">
+      <div class="wrap narrow">
+        <h2>3. Want us to do it for you?</h2>
+        <p class="muted">Tell us how many listings you have. We'll fix the file by hand and send it back. Free for your first 10 listings during beta.</p>
+        <form id="concierge-form" class="card form-stack" novalidate>
+          <label>Email
+            <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+          </label>
+          <label>How many listings are in the file?
+            <input type="number" name="listingCount" min="1" max="10000" step="1" required />
+          </label>
+          <label>Anything we should know? <span class="muted small">(optional)</span>
+            <textarea name="note" rows="3" maxlength="500" placeholder="For example: the file is from Etsy's bulk template, due Friday"></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Request a manual check</button>
+          <p id="concierge-msg" class="small" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap small">
+      <p>Listing Preflight is an independent tool and is not affiliated with Etsy, Inc.
+        Limits are based on Etsy's published listing guidance; confirm them on Etsy's help pages before relying on the results.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
